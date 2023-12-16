@@ -10944,11 +10944,11 @@ section {
 }
 
 section.cta {
-  position: relative;
-  padding: 15rem 0;
-  background-image: url("https://source.unsplash.com/5g41N3uRPf8/1500x800");
-  background-position: center;
-  background-size: cover;
+    position: relative;
+    padding: 15rem 0;
+    background-image: url("https://cdn.glitch.global/2a3af8bb-e7b2-4e50-8ce2-68e3e8cf4538/3dapp.jpg?v=1684091290886");
+    background-position: center;
+    background-size: cover;
 }
 section.cta .cta-content {
   position: relative;

@@ -1114,20 +1114,36 @@
 
             </a-entity>
 
-            <!--office-block-->
+            <!--ui assy-->
             <a-entity id="ujassy" position="0 0 0" rotation="0 0 0" scale="1 1 1">
                 <a-entity id="cross" gltf-model="#bb038" mixin="cross">
 
                 </a-entity>
-                <a-entity id="y1" gltf-model="#bb037" mixin="hinged1">
+                <a-entity id="y1" gltf-model="#bb037"  position="0 0 0" rotation="0 0 0" scale="1 1 1"
+                          mixin="hinged1">
 
                 </a-entity>
-                <a-entity id="y2" gltf-model="#bb036" mixin="hinged2">
+                <a-entity id="y2" gltf-model="#bb036"  position="0 0 0" rotation="0 0 0" scale="1 1 1"
+                          mixin="hinged2">
 
                 </a-entity>
             </a-entity>
 
 
+            
+
+            <!--office-block-->
+            <a-entity id="carkeyassy" position="0 0 0" rotation="0 0 0" scale="100 100 100">
+                <a-entity id="shell" gltf-model="#case" mixin="cross">
+
+                </a-entity>
+                <a-entity id="y1" gltf-model="#button" mixin="hinged1">
+
+                </a-entity>
+                <a-entity id="y2" gltf-model="#stem" mixin="hinged2">
+
+                </a-entity>
+            </a-entity>
 
             <a-gltf-model id="ground" src="https://cdn.glitch.global/2a3af8bb-e7b2-4e50-8ce2-68e3e8cf4538/coloredfloor.glb?v=1683611162825" static-body></a-gltf-model>
 
@@ -1235,7 +1251,10 @@
                 </a-entity>
             </a-entity>
 
-            <a-entity id="case" gltf="#"></a-entity>
+            <a-entity id="case" gltf-model="#case" mixin="" position="0 0 0" rotation="0 0 0" static-body
+
+
+                      ></a-entity>
             <a-gltf-model id="button" src="#"></a-gltf-model>
             <a-gltf-model id="stem" src="#"></a-gltf-model>
 
@@ -2658,7 +2677,7 @@
             /*whatitdoes*/
             function prt2vis() {
             document.getElementById("prt2").style.display = "none";
-            <!--document.getElementById("myNav").style.display = "block";-->
+            /*document.getElementById("myNav").style.display = "block";*/
             };
             /*whatitdoes*/
             function prt1vis() {

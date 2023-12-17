@@ -1,0 +1,56 @@
+<html>
+<head>
+    <title>A-Frame Component: GLTF Manipulator</title>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.0.0/dist/aframe-extras.min.js"></script>
+    <script src="js/gltf-manipulator-component.js"></script>
+</head>
+<body>
+    <a-scene>
+        <a-entity gltf-manipulator="
+        nodeNumber: 2;
+        nodeName: wheel, tyre; 
+        nodePosition: 0 0 0, 0 0 0;
+        nodeRotation: 0 0 0, 0 0 0;
+        nodeScale: 1 1 1, 1 1 1;
+        nodeVisibility: true, true;
+        nodeMaterialName: tyreT1, tyreT2; 
+        nodeTextureURL:rr03.JPG,rr5.JPG ;
+        nodeColor: " 
+        id="model" 
+        position="0 0 0" 
+        scale="0.2 0.2 0.2" 
+        gltf-model="url(model/wheelassy.glb)"
+        animation-mixer>
+        </a-entity>
+        <a-sky color="#ECECEC"></a-sky>
+    </a-scene>
+    <script>
+        // Update individual nodes
+        document.querySelector('a-scene').addEventListener('loaded', function () {
+            document.querySelector('#myButton').addEventListener('click', () => {
+                updateNodeFunction(
+                    'tyre_mat',       // node name
+                    'model/rr03.png',   // textureURL
+                    '0 -4 1',            // position
+                    '0 0 0',            // rotation
+                    '1 1 1',            // scale
+                    '#ffffff',          // color
+                    true                // visibility
+                );
+                updateNodeFunction(
+                    'wheel_mat',       // node name
+                    'model/rr5.png',   // textureURL
+                    '0 1 1',            // position
+                    '0 0 0',            // rotation
+                    '1 1 1',            // scale
+                    '#ffffff',          // color
+                    true                // visibility
+                );            
+            });
+        })
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>CAD-BOXX.COM</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-animation-component@^4.1.2/dist/aframe-animation-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-particle-system-component@1.0.x/dist/aframe-particle-system-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-extras.ocean@%5E3.5.x/dist/aframe-extras.ocean.min.js"></script>
+    <script src="https://unpkg.com/aframe-gradient-sky@1.0.4/dist/gradientsky.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
+    <script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script>
+    <script src="https://cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.1.2/dist/aframe-physics-system.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@^4.1.1/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-physics-extras/dist/aframe-physics-extras.min.js"></script>
+    <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-ground-component@0.0.4/dist/aframe-ground-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-snapto-component/dist/aframe-snapto-component.js"></script>
+
+    <script src="https://unpkg.com/aframe-touch-inspector@1.1.2/dist/aframe-inspector.min.js"></script>
+    <script src="https://unpkg.com/aframe-layout-component@4.3.1/dist/aframe-layout-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-orbit-controls@1.2.0/dist/aframe-orbit-controls.min.js"></script>
+    <script src="aframe-gltf-exporter-component.min.js"></script>
+
+    <script src="https://unpkg.com/super-hands/dist/super-hands.min.js"></script>
+    <script src="https://unpkg.com/aframe-datgui-component/dist/aframe-datgui-component.min.js"></script>
+    <script src="https://cdn.rawgit.com/gftruj/aframe-physics-spring/master/dist/aframe-spring.min.js"></script>
+    <script src="https://unpkg.com/aframe-spherical-controls-component/dist/aframe-spherical-controls-component.min.js"></script>
+    <script src="https://rawgit.com/chenzlabs/auto-detect-controllers/master/dist/aframe-auto-detect-controllers-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-gltf-helpers@0.0.2/dist/aframe-gltf-helpers.min.js"></script>
+    <script src="https://rawgit.com/dbradleyfl/aframe-gridhelper/master/dist/aframe-gridhelper-component.min.js"></script>
+    <script src="https://rawgit.com/dbradleyfl/aframe-selectable-light-component/master/dist/aframe-selectable-light-component.min.js"></script>
+
+    <script src="js/aframe-extras.min.js"></script>
+    <script src="js/aframe-extras.controls.mih.js"></script>
+    <script src="js/aframe-extras.misc.js"></script>
+    <script src="js/aframe-extras.loaders.js"></script>
+    <script src="js/aframe-extras.pathfinding.js"></script>
+    <script src="js/aframe-extras.primitives.js"></script>
+    <script src="js/aframe-point-component.min.js"></script>
+    <script src="js/aframe-alongpath-component.min.js"></script>
+    <script src="js/aframe-layout-component.min.js"></script>
+    <script src="js/aframe-screenshot-component.min.js"></script>
+    <script src="js/aframe-gltfutils.min.js"></script>
+
+
+
+
+    <script src="js/grab.js"></script>
+    <script src="js/grab.min.js"></script>
+    <script src="js/grab-lock.js"></script>
+    <script src="js/GLTFPart.js"></script>
+    <script src="js/Vartiste.js"></script>
+
+    <script src="js/RegisteredAF.js"></script>
+    <script src="js/manipulator.js"></script>
+    <script src="js/movement-controls.js"></script>
+    <script src="js/PointCloudPLY.js"></script>
+
+    <script src="js/aframe-drag-and-drop-component.min.js"></script>
+    <script src="js/aframe-crawling-cursor.min.js"></script>
+
+    <!--reaction components-->
+    <script src="reaction_components/clickable.js"></script>
+    <script src="reaction_components/draggable.js"></script>
+    <script src="reaction_components/drag-droppable.js"></script>
+    <script src="reaction_components/hoverable.js"></script>
+    <script src="reaction_components/stretchable.js"></script>
+    <script src="reaction_components/droppable.js"></script>
+    <script src="reaction_components/grabbable.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="aframe.css">
+
+    <script>
+          AFRAME.registerComponent('click-impulse', {
+              init: function () {
+                  var el = this.el;
+
+                  el.addEventListener('click', function () {
+                      el.body.applyImpulse(
+                          /* impulse */
+                          new CANNON.Vec3(
+                              THREE.Math.randInt(-20, 20),
+                              THREE.Math.randInt(-20, 20),
+                              THREE.Math.randInt(-20, 20)
+                          ),
+                                          /* world position */ new CANNON.Vec3().copy(el.getDOMAttribute('position'))
+                      );
+                  });
+
+              }
+          });
+
+          // forward mouse and touch events to the super-hands entity
+          AFRAME.registerComponent('capture-mouse', {
+              init: function () {
+                  this.eventRepeater = this.eventRepeater.bind(this)
+                  this.el.sceneEl.addEventListener('loaded', () => {
+                      this.el.sceneEl.canvas.addEventListener('mousedown', this.eventRepeater)
+                      this.el.sceneEl.canvas.addEventListener('mouseup', this.eventRepeater)
+                      this.el.sceneEl.canvas.addEventListener('touchstart', this.eventRepeater)
+                      this.el.sceneEl.canvas.addEventListener('touchmove', this.eventRepeater)
+                      this.el.sceneEl.canvas.addEventListener('touchend', this.eventRepeater)
+                  }, { once: true })
+              },
+              eventRepeater: function (evt) {
+                  if (evt.type.startsWith('touch')) {
+                      evt.preventDefault()
+                      // avoid repeating touchmove because it interferes with look-controls
+                      if (evt.type === 'touchmove') { return }
+                  }
+                  this.el.emit(evt.type, evt.detail)
+              }
+          })
+    </script>
+
+    <style>
+        .button:hover {
+            background-color: #fff;
+            color: blue;
+        }
+
+        .button {
+            background-color: blue;
+            border-radius: 8px;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 12px;
+            height: 34px;
+            margin-top: 5px;
+            margin-left: 5px;
+            outline: none;
+            position: relative;
+            width: 190px;
+            z-index: 999;
+        }
+
+        .container {
+            position: absolute;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="c1" class="container">
+        <button id="bb11" class="button" onclick="changesphere()">XXXX</button>
+        <button id="bb11" class="button" onclick="changesphere()">XXXX</button>
+        <button id="bb11" class="button" onclick="changesphere()">XXXX</button>
+        <button id="bb11" class="button" onclick="changesphere()">XXXX</button>
+        <button id="bb11" class="button" onclick="changesphere()">XXXX</button>
+        <button id="bb11" class="button" onclick="changesphere()">XXXX</button>
+        <button id="bb11" class="button" onclick="changesphere()">XXXX</button>
+                              
+    </div>
+
+    <script>
+  var setacis = function() {
+    console.log(document.querySelector("a-sphere").getAttribute("color"))
+    if (document.querySelector("a-sphere").getAttribute("color") !== "blue") {
+      document.querySelector("a-sphere").setAttribute("color", "blue");
+    } else {
+      document.querySelector("a-sphere").setAttribute("color", "green");
+
+    }
+  }
+
+    </script>
+    <script>
+  var setplane = function() {
+    console.log(document.querySelector("a-sphere").getAttribute("color"))
+    if (document.querySelector("a-sphere").getAttribute("color") !== "blue") {
+      document.querySelector("a-sphere").setAttribute("color", "blue");
+    } else {
+      document.querySelector("a-sphere").setAttribute("color", "green");
+
+    }
+  }
+
+    </script>
+
+    <script>
+  var setscale = function() {
+    console.log(document.querySelector("a-sphere").getAttribute("scale"))
+    if (document.querySelector("a-sphere").getAttribute("scale") !== "2") {
+      document.querySelector("a-sphere").setAttribute("scale", "2");
+    } else {
+      document.querySelector("a-sphere").setAttribute("scale", "3");
+
+    }
+  }
+
+    </script>
+
+
+    <script>
+  var changesphere = function() {
+    console.log(document.querySelector("a-sphere").getAttribute("color"))
+    if (document.querySelector("a-sphere").getAttribute("color") !== "blue") {
+      document.querySelector("a-sphere").setAttribute("color", "blue");
+    } else {
+      document.querySelector("a-sphere").setAttribute("color", "green");
+
+    }
+  }
+
+    </script>
+
+    <script>
+  var changecylinder = function() {
+    console.log(document.querySelector("a-cylinder").getAttribute("color"))
+    if (document.querySelector("a-cylinder").getAttribute("color") !== "crimson") {
+      document.querySelector("a-cylinder").setAttribute("color", "crimson");
+    } else {
+      document.querySelector("a-cylinder").setAttribute("color", "orange");
+
+    }
+  }
+
+    </script>
+
+    <script>
+  var changebox = function() {
+    console.log(document.querySelector("a-box").getAttribute("yellow"))
+    if (document.querySelector("a-box").getAttribute("color") !== "yellow") {
+      document.querySelector("a-box").setAttribute("color", "yellow");
+    } else {
+      document.querySelector("a-box").setAttribute("color", "red");
+
+    }
+  }
+
+    </script>
+
+
+
+
+    <a-scene>
+
+
+        <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+        <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+        <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+        <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+        <a-sky color="#ECECEC"></a-sky>
+
+
+    </a-scene>
+
+
+
+</body>
+</html>
